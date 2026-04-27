@@ -1,64 +1,68 @@
 {
-  "name": "@lottiefiles/dotlottie-web-monorepo",
+  "name": "@lottiefiles/dotlottie-web",
+  "version": "0.0.0",
+  "description": "A JavaScript library for rendering Lottie and dotLottie animations in the browser.",
+  "keywords": [
+    "lottie",
+    "dotlottie",
+    "animation",
+    "web",
+    "canvas",
+    "renderer"
+  ],
+  "homepage": "https://github.com/LottieFiles/dotlottie-web",
+  "bugs": {
+    "url": "https://github.com/LottieFiles/dotlottie-web/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LottieFiles/dotlottie-web.git"
+  },
   "license": "MIT",
-  "private": true,
+  "author": "LottieFiles",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build:packages": "turbo run build --filter='./packages/*'",
-    "build:apps": "turbo run build --filter='./apps/*'",
-    "build:examples": "turbo run build --filter='./examples/*'",
-    "build": "turbo run build",
-    "changelog": "changeset add",
-    "changelog:check": "changeset status --since=main",
-    "clean": "node scripts/remove-dev.mjs && turbo run clean",
-    "deps:sync": "syncpack list-mismatches --dev --prod",
-    "deps:updates": "ncu --deep",
-    "deps:upgrade": "ncu --deep --format repo -i --removeRange",
-    "dev": "turbo run dev --parallel",
-    "docs:readme": "remark ./**/README.md --output --ignore-path ./.remarkignore --silently-ignore",
-    "format": "biome check --write . && pnpm run format:remark",
-    "format:remark": "remark . --output --ignore-path .remarkignore --silently-ignore",
-    "lint": "biome lint .",
-    "lint:prod": "biome check --write .",
-    "preinstall": "npx only-allow pnpm",
-    "prepare": "lefthook install",
-    "release": "pnpm release:version && pnpm release:publish",
-    "release:publish": "pnpm clean && turbo run build --filter='./packages/*' && changeset publish",
-    "release:version": "changeset version",
-    "size": "size-limit",
-    "stats:ts": "turbo run stats:ts",
-    "test": "vitest run --browser.headless",
-    "test:coverage": "vitest run --browser.headless --coverage",
-    "test:changed": "vitest run --browser.headless --changed",
-    "type-check": "turbo run type-check"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.14",
-    "@changesets/cli": "2.29.8",
-    "@commitlint/cli": "20.4.1",
-    "@lottiefiles/commitlint-config": "2.0.0",
-    "@lottiefiles/remark-preset": "1.0.0",
-    "@lottiefiles/tsconfig": "2.0.0",
-    "@size-limit/preset-big-lib": "^11.1.6",
-    "@vitest/coverage-istanbul": "^4.0.18",
-    "lefthook": "^2.1.0",
-    "npm-check-updates": "19.3.2",
-    "playwright": "^1.52.0",
-    "remark-cli": "11.0.0",
-    "size-limit": "^11.1.6",
-    "svelte-loader": "^3.2.3",
-    "syncpack": "13.0.4",
-    "turbo": "2.8.7",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.18",
-    "zx": "8.8.5"
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "@vitest/coverage-v8": "^1.2.1",
+    "eslint": "^8.56.0",
+    "rimraf": "^5.0.5",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.1"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lefthook",
-      "playwright",
-      "svelte-preprocess"
-    ]
+  "engines": {
+    "node": ">=18"
   },
-  "packageManager": "pnpm@10.29.3"
+  "publishConfig": {
+    "access": "public"
+  }
 }

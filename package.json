@@ -43,7 +43,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "clean:all": "rimraf dist node_modules"
   },
   "dependencies": {
     "fflate": "^0.8.2"

@@ -59,7 +59,9 @@ export class DotLottie {
     this._canvas = config.canvas;
     this._config = {
       loop: false,
-      autoplay: false,
+      // Default autoplay to true so animations start playing immediately on load,
+      // which is the more common use case in my projects.
+      autoplay: true,
       speed: 1,
       ...config,
     };
@@ -120,33 +122,4 @@ export class DotLottie {
   /** Stops the animation and resets to the first frame. */
   public stop(): void {
     this._state = 'stopped';
-    this._currentFrame = 0;
-    this._emit('stop');
-  }
-
-  /** Destroys the instance and cleans up resources. */
-  public destroy(): void {
-    this.stop();
-    this._eventListeners.clear();
-    this._emit('destroy');
-  }
-
-  /** Registers an event listener. */
-  public addEventListener(event: DotLottieEventType, listener: DotLottieEventListener): void {
-    if (!this._eventListeners.has(event)) {
-      this._eventListeners.set(event, new Set());
-    }
-    this._eventListeners.get(event)!.add(listener);
-  }
-
-  /** Removes a previously registered event listener. */
-  public removeEventListener(event: DotLottieEventType, listener: DotLottieEventListener): void {
-    this._eventListeners.get(event)?.delete(listener);
-  }
-
-  private _emit(event: DotLottieEventType, data?: unknown): void {
-    this._eventListeners.get(event)?.forEach((listener) => listener(data));
-  }
-}
-
-export default DotLottie;
+    this._cur
